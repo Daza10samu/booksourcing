@@ -1,4 +1,4 @@
-rootProject.name = "auth"
+rootProject.name = "main"
 
 includeBuild("api")
 includeBuild("server")
