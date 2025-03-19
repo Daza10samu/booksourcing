@@ -30,10 +30,8 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.types.ULong;
 
 import tech.ydb.jooq.binding.TimestampBinding;
-import tech.ydb.jooq.binding.Uint64Binding;
 
 
 /**
@@ -60,12 +58,12 @@ public class Book extends TableImpl<BookRecord> {
     /**
      * The column <code>DEFAULT_SCHEMA.book.id</code>.
      */
-    public final TableField<BookRecord, ULong> ID = createField(DSL.name("id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<BookRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.book.owner_id</code>.
      */
-    public final TableField<BookRecord, ULong> OWNER_ID = createField(DSL.name("owner_id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<BookRecord, Long> OWNER_ID = createField(DSL.name("owner_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.book.title</code>.

@@ -1,6 +1,6 @@
-package org.dazai.booksourcing.auth.web
+package org.dazai.booksourcing.main.web
 
-import org.dazai.booksourcing.auth.application.ApplicationConfiguration
+import org.dazai.booksourcing.main.application.ApplicationConfiguration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration

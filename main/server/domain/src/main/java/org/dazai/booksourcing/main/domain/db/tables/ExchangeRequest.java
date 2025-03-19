@@ -30,10 +30,8 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.types.ULong;
 
 import tech.ydb.jooq.binding.TimestampBinding;
-import tech.ydb.jooq.binding.Uint64Binding;
 
 
 /**
@@ -60,29 +58,29 @@ public class ExchangeRequest extends TableImpl<ExchangeRequestRecord> {
     /**
      * The column <code>DEFAULT_SCHEMA.exchange_request.id</code>.
      */
-    public final TableField<ExchangeRequestRecord, ULong> ID = createField(DSL.name("id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<ExchangeRequestRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column
      * <code>DEFAULT_SCHEMA.exchange_request.requested_book_id</code>.
      */
-    public final TableField<ExchangeRequestRecord, ULong> REQUESTED_BOOK_ID = createField(DSL.name("requested_book_id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<ExchangeRequestRecord, Long> REQUESTED_BOOK_ID = createField(DSL.name("requested_book_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column
      * <code>DEFAULT_SCHEMA.exchange_request.requestor_book_id</code>.
      */
-    public final TableField<ExchangeRequestRecord, ULong> REQUESTOR_BOOK_ID = createField(DSL.name("requestor_book_id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<ExchangeRequestRecord, Long> REQUESTOR_BOOK_ID = createField(DSL.name("requestor_book_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.exchange_request.requestor_id</code>.
      */
-    public final TableField<ExchangeRequestRecord, ULong> REQUESTOR_ID = createField(DSL.name("requestor_id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<ExchangeRequestRecord, Long> REQUESTOR_ID = createField(DSL.name("requestor_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.exchange_request.owner_id</code>.
      */
-    public final TableField<ExchangeRequestRecord, ULong> OWNER_ID = createField(DSL.name("owner_id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<ExchangeRequestRecord, Long> OWNER_ID = createField(DSL.name("owner_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.exchange_request.status</code>.
@@ -103,6 +101,11 @@ public class ExchangeRequest extends TableImpl<ExchangeRequestRecord> {
      * The column <code>DEFAULT_SCHEMA.exchange_request.completion_date</code>.
      */
     public final TableField<ExchangeRequestRecord, Instant> COMPLETION_DATE = createField(DSL.name("completion_date"), SQLDataType.LOCALDATETIME(26), this, "", new TimestampBinding());
+
+    /**
+     * The column <code>DEFAULT_SCHEMA.exchange_request.from_publication</code>.
+     */
+    public final TableField<ExchangeRequestRecord, Long> FROM_PUBLICATION = createField(DSL.name("from_publication"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.exchange_request.message</code>.

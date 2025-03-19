@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS user_roles (
-      user_id Uint64 NOT NULL,
+      user_id Int64 NOT NULL,
       role    Utf8   NOT NULL,
 
       PRIMARY KEY (user_id, role)
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS user_roles (
 CREATE TABLE IF NOT EXISTS jwt_tokens (
     jwt_token     Utf8             NOT NULL,
     expiration_ts Int64            NOT NULL,
-    user_id       Uint64           NOT NULL,
+    user_id       Int64           NOT NULL,
     type          Utf8             NOT NULL,
     revoked       Bool             NOT NULL,
 

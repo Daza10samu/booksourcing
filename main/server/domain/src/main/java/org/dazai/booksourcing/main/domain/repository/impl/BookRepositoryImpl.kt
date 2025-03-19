@@ -3,8 +3,8 @@ package org.dazai.booksourcing.main.domain.repository.impl
 import org.dazai.booksourcing.main.domain.db.Indexes
 import org.dazai.booksourcing.main.domain.db.Tables.BOOK
 import org.dazai.booksourcing.main.domain.db.tables.records.BookRecord
-import org.dazai.booksourcing.main.domain.model.Book
-import org.dazai.booksourcing.main.domain.model.Book.BookStatus
+import org.dazai.booksourcing.main.domain.models.Book
+import org.dazai.booksourcing.main.domain.models.Book.BookStatus
 import org.dazai.booksourcing.main.domain.repository.BookRepository
 import org.springframework.stereotype.Repository
 import tech.ydb.jooq.impl.YdbDSLContextImpl
@@ -16,13 +16,13 @@ class BookRepositoryImpl(
 
     override fun findById(id: Long): Book? {
         return dsl.selectFrom(BOOK)
-            .where(BOOK.ID.eq(org.jooq.types.ULong.valueOf(id)))
+            .where(BOOK.ID.eq(id))
             .fetchOne()?.toModel()
     }
 
     override fun findByOwnerId(ownerId: Long): List<Book> {
         return dsl.selectFrom(BOOK.useIndex(Indexes.BOOK__OWNER_ID__IDX.name))
-            .where(BOOK.OWNER_ID.eq(org.jooq.types.ULong.valueOf(ownerId)))
+            .where(BOOK.OWNER_ID.eq(ownerId))
             .map { it.toModel() }
     }
 
@@ -55,7 +55,8 @@ class BookRepositoryImpl(
 
     override fun save(book: Book) {
         dsl.insertInto(BOOK)
-            .set(book.toRecord())
+            .set(book
+                .copy(id = null).toRecord())
             .execute()
     }
 
@@ -75,7 +76,7 @@ class BookRepositoryImpl(
 
     override fun delete(id: Long) {
         dsl.deleteFrom(BOOK)
-            .where(BOOK.ID.eq(org.jooq.types.ULong.valueOf(id)))
+            .where(BOOK.ID.eq(id))
             .execute()
     }
 
@@ -83,15 +84,15 @@ class BookRepositoryImpl(
         private fun Book.toRecord(): BookRecord {
             val record = BookRecord()
 
-            id?.let { record.id = org.jooq.types.ULong.valueOf(it) }
-            ownerId.let { record.ownerId = org.jooq.types.ULong.valueOf(it) }
+            id?.let { record.id = it }
+            ownerId.let { record.ownerId = it }
 
             record.title = title
             record.author = author
             record.genre = genre
             record.description = description
-            record.condition = condition
-            record.image = image
+            record.condition = condition.name
+            record.image = imageUrl
             record.status = status.name
 
             record.addedDate = addedDate
@@ -100,14 +101,14 @@ class BookRepositoryImpl(
         }
 
         private fun BookRecord.toModel(): Book = Book(
-            id = id!!.toBigInteger()!!.longValueExact(),
-            ownerId = ownerId!!.toBigInteger()!!.longValueExact(),
+            id = id,
+            ownerId = ownerId,
             title = title,
             author = author,
             genre = genre,
             description = description,
-            condition = condition,
-            image = image,
+            condition = Book.BookCondition.valueOf(condition),
+            imageUrl = image,
             status = BookStatus.valueOf(status),
             addedDate = addedDate,
         )

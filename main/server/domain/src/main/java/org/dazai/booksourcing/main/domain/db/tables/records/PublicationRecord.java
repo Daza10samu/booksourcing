@@ -9,7 +9,6 @@ import java.time.Instant;
 import org.dazai.booksourcing.main.domain.db.tables.Publication;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.types.ULong;
 
 
 /**
@@ -23,43 +22,43 @@ public class PublicationRecord extends UpdatableRecordImpl<PublicationRecord> {
     /**
      * Setter for <code>DEFAULT_SCHEMA.publication.id</code>.
      */
-    public void setId(ULong value) {
+    public void setId(Long value) {
         set(0, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.publication.id</code>.
      */
-    public ULong getId() {
-        return (ULong) get(0);
+    public Long getId() {
+        return (Long) get(0);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.publication.offered_book_id</code>.
      */
-    public void setOfferedBookId(ULong value) {
+    public void setOfferedBookId(Long value) {
         set(1, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.publication.offered_book_id</code>.
      */
-    public ULong getOfferedBookId() {
-        return (ULong) get(1);
+    public Long getOfferedBookId() {
+        return (Long) get(1);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.publication.owner_id</code>.
      */
-    public void setOwnerId(ULong value) {
+    public void setOwnerId(Long value) {
         set(2, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.publication.owner_id</code>.
      */
-    public ULong getOwnerId() {
-        return (ULong) get(2);
+    public Long getOwnerId() {
+        return (Long) get(2);
     }
 
     /**
@@ -109,7 +108,7 @@ public class PublicationRecord extends UpdatableRecordImpl<PublicationRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Record1<ULong> key() {
+    public Record1<Long> key() {
         return (Record1) super.key();
     }
 
@@ -127,7 +126,7 @@ public class PublicationRecord extends UpdatableRecordImpl<PublicationRecord> {
     /**
      * Create a detached, initialised PublicationRecord
      */
-    public PublicationRecord(ULong id, ULong offeredBookId, ULong ownerId, String offerDetails, String status, Instant createdDate) {
+    public PublicationRecord(Long id, Long offeredBookId, Long ownerId, String offerDetails, String status, Instant createdDate) {
         super(Publication.PUBLICATION);
 
         setId(id);

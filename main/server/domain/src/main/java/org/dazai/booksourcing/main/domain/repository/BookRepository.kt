@@ -1,6 +1,6 @@
 package org.dazai.booksourcing.main.domain.repository
 
-import org.dazai.booksourcing.main.domain.model.Book
+import org.dazai.booksourcing.main.domain.models.Book
 
 interface BookRepository {
     fun findById(id: Long): Book?

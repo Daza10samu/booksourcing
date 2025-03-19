@@ -7,7 +7,6 @@ package org.dazai.booksourcing.auth.domain.db.tables.records;
 import org.dazai.booksourcing.auth.domain.db.tables.JwtTokens;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.types.ULong;
 
 
 /**
@@ -49,15 +48,15 @@ public class JwtTokensRecord extends UpdatableRecordImpl<JwtTokensRecord> {
     /**
      * Setter for <code>DEFAULT_SCHEMA.jwt_tokens.user_id</code>.
      */
-    public void setUserId(ULong value) {
+    public void setUserId(Long value) {
         set(2, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.jwt_tokens.user_id</code>.
      */
-    public ULong getUserId() {
-        return (ULong) get(2);
+    public Long getUserId() {
+        return (Long) get(2);
     }
 
     /**
@@ -111,7 +110,7 @@ public class JwtTokensRecord extends UpdatableRecordImpl<JwtTokensRecord> {
     /**
      * Create a detached, initialised JwtTokensRecord
      */
-    public JwtTokensRecord(String jwtToken, Long expirationTs, ULong userId, String type, Boolean revoked) {
+    public JwtTokensRecord(String jwtToken, Long expirationTs, Long userId, String type, Boolean revoked) {
         super(JwtTokens.JWT_TOKENS);
 
         setJwtToken(jwtToken);

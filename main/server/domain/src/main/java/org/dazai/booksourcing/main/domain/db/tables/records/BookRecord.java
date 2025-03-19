@@ -9,7 +9,6 @@ import java.time.Instant;
 import org.dazai.booksourcing.main.domain.db.tables.Book;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.types.ULong;
 
 
 /**
@@ -23,29 +22,29 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> {
     /**
      * Setter for <code>DEFAULT_SCHEMA.book.id</code>.
      */
-    public void setId(ULong value) {
+    public void setId(Long value) {
         set(0, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.book.id</code>.
      */
-    public ULong getId() {
-        return (ULong) get(0);
+    public Long getId() {
+        return (Long) get(0);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.book.owner_id</code>.
      */
-    public void setOwnerId(ULong value) {
+    public void setOwnerId(Long value) {
         set(1, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.book.owner_id</code>.
      */
-    public ULong getOwnerId() {
-        return (ULong) get(1);
+    public Long getOwnerId() {
+        return (Long) get(1);
     }
 
     /**
@@ -165,7 +164,7 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Record1<ULong> key() {
+    public Record1<Long> key() {
         return (Record1) super.key();
     }
 
@@ -183,7 +182,7 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> {
     /**
      * Create a detached, initialised BookRecord
      */
-    public BookRecord(ULong id, ULong ownerId, String title, String author, String genre, String description, String condition, String image, String status, Instant addedDate) {
+    public BookRecord(Long id, Long ownerId, String title, String author, String genre, String description, String condition, String image, String status, Instant addedDate) {
         super(Book.BOOK);
 
         setId(id);

@@ -1,8 +1,8 @@
-package org.dazai.booksourcing.main.domain.model
+package org.dazai.booksourcing.main.api.v0.dto
 
 import java.time.Instant
 
-data class Publication(
+data class PublicationDto(
     val id: Long?,
     val offeredBookId: Long,
     val ownerId: Long,

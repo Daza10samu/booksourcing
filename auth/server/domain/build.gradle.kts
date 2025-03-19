@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    api("org.dazai.booksourcing:shared")
+    api(project(":shared"))
     api("tech.ydb.jdbc:ydb-jdbc-driver:2.3.7")
     api("tech.ydb:ydb-sdk-topic:2.3.9")
     implementation("tech.ydb.dialects:flyway-ydb-dialect:1.0.0")

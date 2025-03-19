@@ -1,4 +1,4 @@
 rootProject.name = "main"
 
-includeBuild("api")
-includeBuild("server")
+include("api")
+include("server")

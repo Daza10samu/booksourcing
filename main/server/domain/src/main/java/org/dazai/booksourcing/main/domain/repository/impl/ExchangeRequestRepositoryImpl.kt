@@ -2,7 +2,7 @@ package org.dazai.booksourcing.main.domain.repository.impl
 
 import org.dazai.booksourcing.main.domain.db.Indexes
 import org.dazai.booksourcing.main.domain.db.tables.records.ExchangeRequestRecord
-import org.dazai.booksourcing.main.domain.model.ExchangeRequest
+import org.dazai.booksourcing.main.domain.models.ExchangeRequest
 import org.dazai.booksourcing.main.domain.repository.ExchangeRequestRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.support.TransactionTemplate
@@ -17,7 +17,7 @@ class ExchangeRequestRepositoryImpl(
 
     override fun findById(id: Long): ExchangeRequest? {
         return dsl.selectFrom(EXCHANGE_REQUEST)
-            .where(EXCHANGE_REQUEST.ID.eq(org.jooq.types.ULong.valueOf(id)))
+            .where(EXCHANGE_REQUEST.ID.eq(id))
             .fetchOne()
             ?.toModel()
     }
@@ -25,11 +25,7 @@ class ExchangeRequestRepositoryImpl(
     override fun findByRequestorId(requestorId: Long): List<ExchangeRequest> {
         return dsl.selectFrom(EXCHANGE_REQUEST.useIndex(Indexes.EXCHANGE_REQUEST__REQUESTOR_ID__IDX.name))
             .where(
-                EXCHANGE_REQUEST.REQUESTOR_ID.eq(
-                    org.jooq.types.ULong.valueOf(
-                        requestorId
-                    )
-                )
+                EXCHANGE_REQUEST.REQUESTOR_ID.eq(requestorId)
             )
             .fetch()
             .map { it.toModel() }
@@ -38,11 +34,7 @@ class ExchangeRequestRepositoryImpl(
     override fun findByOwnerId(ownerId: Long): List<ExchangeRequest> {
         return dsl.selectFrom(EXCHANGE_REQUEST.useIndex(Indexes.EXCHANGE_REQUEST__OWNER_ID__IDX.name))
             .where(
-                EXCHANGE_REQUEST.OWNER_ID.eq(
-                    org.jooq.types.ULong.valueOf(
-                        ownerId
-                    )
-                )
+                EXCHANGE_REQUEST.OWNER_ID.eq(ownerId)
             )
             .fetch()
             .map { it.toModel() }
@@ -58,11 +50,7 @@ class ExchangeRequestRepositoryImpl(
     override fun findByRequestedBookId(bookId: Long): List<ExchangeRequest> {
         return dsl.selectFrom(EXCHANGE_REQUEST.useIndex(Indexes.EXCHANGE_REQUEST__REQUESTED_BOOK_ID__IDX.name))
             .where(
-                EXCHANGE_REQUEST.REQUESTED_BOOK_ID.eq(
-                    org.jooq.types.ULong.valueOf(
-                        bookId
-                    )
-                )
+                EXCHANGE_REQUEST.REQUESTED_BOOK_ID.eq(bookId)
             )
             .fetch()
             .map { it.toModel() }
@@ -71,18 +59,15 @@ class ExchangeRequestRepositoryImpl(
     override fun findByRequestorBookId(bookId: Long): List<ExchangeRequest> {
         return dsl.selectFrom(EXCHANGE_REQUEST.useIndex(Indexes.EXCHANGE_REQUEST__REQUESTOR_BOOK_ID__IDX.name))
             .where(
-                EXCHANGE_REQUEST.REQUESTOR_BOOK_ID.eq(
-                    org.jooq.types.ULong.valueOf(
-                        bookId
-                    )
-                )
+                EXCHANGE_REQUEST.REQUESTOR_BOOK_ID.eq(bookId)
             )
             .fetch()
             .map { it.toModel() }
     }
 
     override fun save(exchangeRequest: ExchangeRequest) {
-        val record = exchangeRequest.toRecord()
+        val record = exchangeRequest
+            .copy(id = null).toRecord()
 
         dsl.insertInto(EXCHANGE_REQUEST)
             .set(record)
@@ -109,11 +94,7 @@ class ExchangeRequestRepositoryImpl(
         transactionTemplate.execute {
             dsl.deleteFrom(EXCHANGE_REQUEST)
                 .where(
-                    EXCHANGE_REQUEST.ID.eq(
-                        org.jooq.types.ULong.valueOf(
-                            id
-                        )
-                    )
+                    EXCHANGE_REQUEST.ID.eq(id)
                 )
                 .execute()
         }
@@ -123,32 +104,34 @@ class ExchangeRequestRepositoryImpl(
         private fun ExchangeRequest.toRecord(): ExchangeRequestRecord {
             val record = ExchangeRequestRecord()
 
-            id?.let { record.id = org.jooq.types.ULong.valueOf(it) }
-            requestedBookId.let { record.requestedBookId = org.jooq.types.ULong.valueOf(it) }
-            requestorBookId.let { record.requestorBookId = org.jooq.types.ULong.valueOf(it) }
-            requestorId.let { record.requestorId = org.jooq.types.ULong.valueOf(it) }
-            ownerId.let { record.ownerId = org.jooq.types.ULong.valueOf(it) }
+            id?.let { record.id = it }
+            requestedBookId.let { record.requestedBookId = it }
+            requestorBookId.let { record.requestorBookId = it }
+            requestorId.let { record.requestorId = it }
+            ownerId.let { record.ownerId = it }
 
             record.status = status.name
             record.requestDate = requestDate
             record.responseDate = responseDate
             record.completionDate = completionDate
             record.message = message
+            record.fromPublication = fromPublicationId
 
             return record
         }
 
         private fun ExchangeRequestRecord.toModel(): ExchangeRequest = ExchangeRequest(
-            id.toBigInteger()!!.longValueExact(),
-            requestedBookId.toBigInteger()!!.longValueExact(),
-            requestorBookId.toBigInteger()!!.longValueExact(),
-            requestorId.toBigInteger()!!.longValueExact(),
-            ownerId.toBigInteger()!!.longValueExact(),
+            id,
+            requestedBookId,
+            requestorBookId,
+            requestorId,
+            ownerId,
             ExchangeRequest.ExchangeRequestStatus.valueOf(status),
             requestDate,
             responseDate,
             completionDate,
             message,
+            fromPublication
         )
     }
 }

@@ -13,7 +13,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "org.dazai.booksourcing.auth.domain"
+group = "org.dazai.booksourcing.main.domain"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    api("org.dazai.booksourcing:shared")
+    api(project(":shared"))
     api("tech.ydb.jdbc:ydb-jdbc-driver:2.3.7")
     api("tech.ydb:ydb-sdk-topic:2.3.9")
     implementation("tech.ydb.dialects:flyway-ydb-dialect:1.0.0")

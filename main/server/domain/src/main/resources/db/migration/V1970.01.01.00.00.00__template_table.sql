@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS user_profile
 (
-    id         Uint64 NOT NULL,
-    user_id    Uint64 NOT NULL,
+    id         BigSerial NOT NULL,
+    user_id    Int64 NOT NULL,
     first_name Utf8 NOT NULL,
     last_name  Utf8 NOT NULL,
     address    Utf8,
@@ -15,8 +15,8 @@ CREATE TABLE IF NOT EXISTS user_profile
 
 -- Book table definition
 CREATE TABLE IF NOT EXISTS book (
-    id          Uint64 NOT NULL,
-    owner_id    Uint64 NOT NULL,
+    id          BigSerial NOT NULL,
+    owner_id    Int64 NOT NULL,
     title       Utf8 NOT NULL,
     author      Utf8 NOT NULL,
     genre       Utf8 NOT NULL,
@@ -37,15 +37,16 @@ CREATE TABLE IF NOT EXISTS book (
 
 -- Exchange Request table definition
 CREATE TABLE IF NOT EXISTS exchange_request (
-    id                Uint64 NOT NULL,
-    requested_book_id Uint64 NOT NULL, -- Foreign Key to book.id
-    requestor_book_id Uint64 NOT NULL, -- Foreign Key to book.id
-    requestor_id      Uint64 NOT NULL, -- Foreign Key to users.id
-    owner_id          Uint64 NOT NULL, -- Foreign Key to users.id
+    id                BigSerial NOT NULL,
+    requested_book_id Int64 NOT NULL, -- Foreign Key to book.id
+    requestor_book_id Int64 NOT NULL, -- Foreign Key to book.id
+    requestor_id      Int64 NOT NULL, -- Foreign Key to users.id
+    owner_id          Int64 NOT NULL, -- Foreign Key to users.id
     status            Utf8 NOT NULL, -- Possible values: PENDING, ACCEPTED, REJECTED, COMPLETED
     request_date      Timestamp NOT NULL,
     response_date     Timestamp,
     completion_date   Timestamp,
+    from_publication  Int64,
     message           Utf8,
 
     INDEX exchange_request__status__idx                GLOBAL ON (status),
@@ -59,9 +60,9 @@ CREATE TABLE IF NOT EXISTS exchange_request (
 
 -- publication to offer an exchange
 CREATE TABLE IF NOT EXISTS publication (
-    id              Uint64 NOT NULL,
-    offered_book_id Uint64 NOT NULL, -- Foreign Key to book.id, the book being offered
-    owner_id        Uint64 NOT NULL, -- Foreign Key to user_profile.id, the owner of the offered book
+    id              BigSerial NOT NULL,
+    offered_book_id Int64 NOT NULL, -- Foreign Key to book.id, the book being offered
+    owner_id        Int64 NOT NULL, -- Foreign Key to user_profile.id, the owner of the offered book
     offer_details   Utf8 NOT NULL, -- Details about the exchange offer
     status          Utf8 NOT NULL, -- Possible values: ACTIVE, EXPIRED, WITHDRAWN
     created_date    Timestamp NOT NULL,

@@ -30,10 +30,8 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.types.ULong;
 
 import tech.ydb.jooq.binding.TimestampBinding;
-import tech.ydb.jooq.binding.Uint64Binding;
 
 
 /**
@@ -60,17 +58,17 @@ public class Publication extends TableImpl<PublicationRecord> {
     /**
      * The column <code>DEFAULT_SCHEMA.publication.id</code>.
      */
-    public final TableField<PublicationRecord, ULong> ID = createField(DSL.name("id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<PublicationRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.publication.offered_book_id</code>.
      */
-    public final TableField<PublicationRecord, ULong> OFFERED_BOOK_ID = createField(DSL.name("offered_book_id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<PublicationRecord, Long> OFFERED_BOOK_ID = createField(DSL.name("offered_book_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.publication.owner_id</code>.
      */
-    public final TableField<PublicationRecord, ULong> OWNER_ID = createField(DSL.name("owner_id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<PublicationRecord, Long> OWNER_ID = createField(DSL.name("owner_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.publication.offer_details</code>.

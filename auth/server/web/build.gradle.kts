@@ -25,8 +25,8 @@ repositories {
 }
 
 dependencies {
-    api(project(":application"))
-    api("org.dazai.booksourcing.auth.api:api-v0")
+    api(project(":auth:server:application"))
+    api(project(":auth:api:api-v0"))
 
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.springframework.boot:spring-boot-starter-web")

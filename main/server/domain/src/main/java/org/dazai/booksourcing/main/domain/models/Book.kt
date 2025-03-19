@@ -1,4 +1,4 @@
-package org.dazai.booksourcing.main.domain.model
+package org.dazai.booksourcing.main.domain.models
 
 import java.time.Instant
 
@@ -9,12 +9,16 @@ data class Book(
     val author: String,
     val genre: String,
     val description: String? = null,
-    val condition: String,
-    val image: String? = null,
+    val condition: BookCondition,
+    val imageUrl: String? = null,
     val status: BookStatus,
     val addedDate: Instant
 ) {
     enum class BookStatus {
         AVAILABLE, REQUESTED, EXCHANGED
+    }
+
+    enum class BookCondition {
+        NEW, USED, GOOD, BAD,
     }
 }

@@ -15,7 +15,7 @@ class RoleRepositoryImpl(
     override fun getRoles(userId: Long): Set<Role> {
         return dsl.select(UserRoles.USER_ROLES.ROLE)
             .from(UserRoles.USER_ROLES)
-            .where(UserRoles.USER_ROLES.USER_ID.eq(org.jooq.types.ULong.valueOf(userId)))
+            .where(UserRoles.USER_ROLES.USER_ID.eq(userId))
             .mapNotNull {
                 try {
                     Role.valueOf(it.value1())
@@ -29,13 +29,13 @@ class RoleRepositoryImpl(
 
     override fun addRoles(userId: Long, roles: Set<Role>): Int = dsl.insertInto(UserRoles.USER_ROLES)
         .values(
-            roles.map { UserRolesRecord(org.jooq.types.ULong.valueOf(userId), it.toString()) },
+            roles.map { UserRolesRecord(userId, it.toString()) },
         )
         .onConflictDoNothing()
         .execute()
 
     override fun removeRoles(userId: Long, roles: Set<Role>): Int = dsl.delete(UserRoles.USER_ROLES)
-        .where(UserRoles.USER_ROLES.USER_ID.eq(org.jooq.types.ULong.valueOf(userId)))
+        .where(UserRoles.USER_ROLES.USER_ID.eq(userId))
         .and(UserRoles.USER_ROLES.ROLE.`in`(roles.map { it.toString() }))
         .execute()
 

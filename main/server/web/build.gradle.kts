@@ -5,7 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "org.dazai.booksourcing.auth"
+group = "org.dazai.booksourcing.main"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -25,8 +25,8 @@ repositories {
 }
 
 dependencies {
-    api(project(":application"))
-    api("org.dazai.booksourcing.auth.api:api-v0")
+    api(project(":main:server:application"))
+    api(project(":main:api:api-v0"))
 
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.springframework.boot:spring-boot-starter-web")

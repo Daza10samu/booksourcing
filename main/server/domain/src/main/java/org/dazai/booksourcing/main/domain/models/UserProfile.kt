@@ -1,4 +1,4 @@
-package org.dazai.booksourcing.main.domain.model
+package org.dazai.booksourcing.main.domain.models
 
 data class UserProfile(
     val id: Long?,

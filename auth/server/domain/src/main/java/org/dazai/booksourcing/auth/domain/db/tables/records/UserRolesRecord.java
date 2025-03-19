@@ -7,7 +7,6 @@ package org.dazai.booksourcing.auth.domain.db.tables.records;
 import org.dazai.booksourcing.auth.domain.db.tables.UserRoles;
 import org.jooq.Record2;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.types.ULong;
 
 
 /**
@@ -21,15 +20,15 @@ public class UserRolesRecord extends UpdatableRecordImpl<UserRolesRecord> {
     /**
      * Setter for <code>DEFAULT_SCHEMA.user_roles.user_id</code>.
      */
-    public void setUserId(ULong value) {
+    public void setUserId(Long value) {
         set(0, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.user_roles.user_id</code>.
      */
-    public ULong getUserId() {
-        return (ULong) get(0);
+    public Long getUserId() {
+        return (Long) get(0);
     }
 
     /**
@@ -51,7 +50,7 @@ public class UserRolesRecord extends UpdatableRecordImpl<UserRolesRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Record2<ULong, String> key() {
+    public Record2<Long, String> key() {
         return (Record2) super.key();
     }
 
@@ -69,7 +68,7 @@ public class UserRolesRecord extends UpdatableRecordImpl<UserRolesRecord> {
     /**
      * Create a detached, initialised UserRolesRecord
      */
-    public UserRolesRecord(ULong userId, String role) {
+    public UserRolesRecord(Long userId, String role) {
         super(UserRoles.USER_ROLES);
 
         setUserId(userId);

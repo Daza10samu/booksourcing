@@ -7,7 +7,6 @@ package org.dazai.booksourcing.main.domain.db.tables.records;
 import org.dazai.booksourcing.main.domain.db.tables.UserProfile;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.types.ULong;
 
 
 /**
@@ -35,29 +34,29 @@ public class UserProfileRecord extends UpdatableRecordImpl<UserProfileRecord> {
     /**
      * Setter for <code>DEFAULT_SCHEMA.user_profile.id</code>.
      */
-    public void setId(ULong value) {
+    public void setId(Long value) {
         set(1, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.user_profile.id</code>.
      */
-    public ULong getId() {
-        return (ULong) get(1);
+    public Long getId() {
+        return (Long) get(1);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.user_profile.user_id</code>.
      */
-    public void setUserId(ULong value) {
+    public void setUserId(Long value) {
         set(2, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.user_profile.user_id</code>.
      */
-    public ULong getUserId() {
-        return (ULong) get(2);
+    public Long getUserId() {
+        return (Long) get(2);
     }
 
     /**
@@ -121,7 +120,7 @@ public class UserProfileRecord extends UpdatableRecordImpl<UserProfileRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Record1<ULong> key() {
+    public Record1<Long> key() {
         return (Record1) super.key();
     }
 
@@ -139,7 +138,7 @@ public class UserProfileRecord extends UpdatableRecordImpl<UserProfileRecord> {
     /**
      * Create a detached, initialised UserProfileRecord
      */
-    public UserProfileRecord(String bio, ULong id, ULong userId, String firstName, String lastName, String address, String phone) {
+    public UserProfileRecord(String bio, Long id, Long userId, String firstName, String lastName, String address, String phone) {
         super(UserProfile.USER_PROFILE);
 
         setBio(bio);

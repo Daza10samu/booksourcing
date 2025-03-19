@@ -27,7 +27,7 @@ class JwtTokensRepositoryImpl(
 
     override fun getTokensByUserId(userId: Long): Collection<JwtToken> {
         return dsl.selectFrom(JwtTokens.JWT_TOKENS.useIndex(Indexes.JWT_TOKENS__USER_ID__IDX.name))
-            .where(JwtTokens.JWT_TOKENS.USER_ID.eq(org.jooq.types.ULong.valueOf(userId)))
+            .where(JwtTokens.JWT_TOKENS.USER_ID.eq(userId))
             .map { it.toModel() }
     }
 
@@ -75,7 +75,7 @@ class JwtTokensRepositoryImpl(
         private fun JwtToken.toRecord(): JwtTokensRecord = JwtTokensRecord(
             token,
             expiration,
-            org.jooq.types.ULong.valueOf(userId),
+            userId,
             type.toString(),
             isRevoked,
         )
@@ -83,7 +83,7 @@ class JwtTokensRepositoryImpl(
         private fun JwtTokensRecord.toModel(): JwtToken = JwtToken(
             jwtToken,
             expirationTs,
-            userId.toLong(),
+            userId,
             JwtToken.Type.valueOf(type),
             revoked,
         )

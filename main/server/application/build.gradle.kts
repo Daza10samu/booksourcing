@@ -5,7 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "org.dazai.booksourcing.auth.application"
+group = "org.dazai.booksourcing.main.application"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -25,9 +25,10 @@ repositories {
 }
 
 dependencies {
-    api(project(":domain"))
+    api(project(":main:server:domain"))
 
     implementation("org.springframework.boot:spring-boot-starter")
+    api("org.springframework.boot:spring-boot-starter-websocket")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     developmentOnly("org.springframework.boot:spring-boot-devtools")

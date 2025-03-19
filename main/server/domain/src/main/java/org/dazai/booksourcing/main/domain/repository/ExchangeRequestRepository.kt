@@ -1,6 +1,6 @@
 package org.dazai.booksourcing.main.domain.repository
 
-import org.dazai.booksourcing.main.domain.model.ExchangeRequest
+import org.dazai.booksourcing.main.domain.models.ExchangeRequest
 
 interface ExchangeRequestRepository {
     fun findById(id: Long): ExchangeRequest?

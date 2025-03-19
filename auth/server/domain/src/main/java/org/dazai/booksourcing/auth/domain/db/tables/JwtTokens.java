@@ -29,9 +29,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.types.ULong;
-
-import tech.ydb.jooq.binding.Uint64Binding;
 
 
 /**
@@ -68,7 +65,7 @@ public class JwtTokens extends TableImpl<JwtTokensRecord> {
     /**
      * The column <code>DEFAULT_SCHEMA.jwt_tokens.user_id</code>.
      */
-    public final TableField<JwtTokensRecord, ULong> USER_ID = createField(DSL.name("user_id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<JwtTokensRecord, Long> USER_ID = createField(DSL.name("user_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.jwt_tokens.type</code>.

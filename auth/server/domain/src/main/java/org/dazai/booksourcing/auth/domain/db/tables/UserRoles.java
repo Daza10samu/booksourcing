@@ -25,9 +25,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.types.ULong;
-
-import tech.ydb.jooq.binding.Uint64Binding;
 
 
 /**
@@ -54,7 +51,7 @@ public class UserRoles extends TableImpl<UserRolesRecord> {
     /**
      * The column <code>DEFAULT_SCHEMA.user_roles.user_id</code>.
      */
-    public final TableField<UserRolesRecord, ULong> USER_ID = createField(DSL.name("user_id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<UserRolesRecord, Long> USER_ID = createField(DSL.name("user_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.user_roles.role</code>.

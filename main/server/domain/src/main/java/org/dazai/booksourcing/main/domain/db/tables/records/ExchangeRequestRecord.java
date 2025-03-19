@@ -9,7 +9,6 @@ import java.time.Instant;
 import org.dazai.booksourcing.main.domain.db.tables.ExchangeRequest;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.types.ULong;
 
 
 /**
@@ -23,22 +22,22 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
     /**
      * Setter for <code>DEFAULT_SCHEMA.exchange_request.id</code>.
      */
-    public void setId(ULong value) {
+    public void setId(Long value) {
         set(0, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.exchange_request.id</code>.
      */
-    public ULong getId() {
-        return (ULong) get(0);
+    public Long getId() {
+        return (Long) get(0);
     }
 
     /**
      * Setter for
      * <code>DEFAULT_SCHEMA.exchange_request.requested_book_id</code>.
      */
-    public void setRequestedBookId(ULong value) {
+    public void setRequestedBookId(Long value) {
         set(1, value);
     }
 
@@ -46,15 +45,15 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
      * Getter for
      * <code>DEFAULT_SCHEMA.exchange_request.requested_book_id</code>.
      */
-    public ULong getRequestedBookId() {
-        return (ULong) get(1);
+    public Long getRequestedBookId() {
+        return (Long) get(1);
     }
 
     /**
      * Setter for
      * <code>DEFAULT_SCHEMA.exchange_request.requestor_book_id</code>.
      */
-    public void setRequestorBookId(ULong value) {
+    public void setRequestorBookId(Long value) {
         set(2, value);
     }
 
@@ -62,36 +61,36 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
      * Getter for
      * <code>DEFAULT_SCHEMA.exchange_request.requestor_book_id</code>.
      */
-    public ULong getRequestorBookId() {
-        return (ULong) get(2);
+    public Long getRequestorBookId() {
+        return (Long) get(2);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.exchange_request.requestor_id</code>.
      */
-    public void setRequestorId(ULong value) {
+    public void setRequestorId(Long value) {
         set(3, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.exchange_request.requestor_id</code>.
      */
-    public ULong getRequestorId() {
-        return (ULong) get(3);
+    public Long getRequestorId() {
+        return (Long) get(3);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.exchange_request.owner_id</code>.
      */
-    public void setOwnerId(ULong value) {
+    public void setOwnerId(Long value) {
         set(4, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.exchange_request.owner_id</code>.
      */
-    public ULong getOwnerId() {
-        return (ULong) get(4);
+    public Long getOwnerId() {
+        return (Long) get(4);
     }
 
     /**
@@ -151,17 +150,31 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
     }
 
     /**
+     * Setter for <code>DEFAULT_SCHEMA.exchange_request.from_publication</code>.
+     */
+    public void setFromPublication(Long value) {
+        set(9, value);
+    }
+
+    /**
+     * Getter for <code>DEFAULT_SCHEMA.exchange_request.from_publication</code>.
+     */
+    public Long getFromPublication() {
+        return (Long) get(9);
+    }
+
+    /**
      * Setter for <code>DEFAULT_SCHEMA.exchange_request.message</code>.
      */
     public void setMessage(String value) {
-        set(9, value);
+        set(10, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.exchange_request.message</code>.
      */
     public String getMessage() {
-        return (String) get(9);
+        return (String) get(10);
     }
 
     // -------------------------------------------------------------------------
@@ -169,7 +182,7 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
     // -------------------------------------------------------------------------
 
     @Override
-    public Record1<ULong> key() {
+    public Record1<Long> key() {
         return (Record1) super.key();
     }
 
@@ -187,7 +200,7 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
     /**
      * Create a detached, initialised ExchangeRequestRecord
      */
-    public ExchangeRequestRecord(ULong id, ULong requestedBookId, ULong requestorBookId, ULong requestorId, ULong ownerId, String status, Instant requestDate, Instant responseDate, Instant completionDate, String message) {
+    public ExchangeRequestRecord(Long id, Long requestedBookId, Long requestorBookId, Long requestorId, Long ownerId, String status, Instant requestDate, Instant responseDate, Instant completionDate, Long fromPublication, String message) {
         super(ExchangeRequest.EXCHANGE_REQUEST);
 
         setId(id);
@@ -199,6 +212,7 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
         setRequestDate(requestDate);
         setResponseDate(responseDate);
         setCompletionDate(completionDate);
+        setFromPublication(fromPublication);
         setMessage(message);
         resetChangedOnNotNull();
     }

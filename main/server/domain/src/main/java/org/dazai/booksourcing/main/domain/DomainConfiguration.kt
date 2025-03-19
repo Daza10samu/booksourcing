@@ -1,6 +1,5 @@
-package org.dazai.booksourcing.auth.domain
+package org.dazai.booksourcing.main.domain
 
-import org.jooq.impl.DataSourceConnectionProvider
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
@@ -9,8 +8,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
-import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy
-import javax.sql.DataSource
+import java.time.Clock
 
 @Configuration
 @ComponentScan
@@ -20,4 +18,9 @@ import javax.sql.DataSource
     JooqAutoConfiguration::class,
 )
 @EnableAutoConfiguration
-class DomainConfiguration
+class DomainConfiguration {
+    @Bean
+    fun clock(): Clock {
+        return Clock.systemUTC()
+    }
+}

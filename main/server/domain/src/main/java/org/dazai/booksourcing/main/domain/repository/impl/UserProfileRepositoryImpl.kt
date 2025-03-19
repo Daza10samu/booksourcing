@@ -2,7 +2,7 @@ package org.dazai.booksourcing.main.domain.repository.impl
 
 import org.dazai.booksourcing.main.domain.db.Indexes
 import org.dazai.booksourcing.main.domain.db.tables.records.UserProfileRecord
-import org.dazai.booksourcing.main.domain.model.UserProfile
+import org.dazai.booksourcing.main.domain.models.UserProfile
 import org.dazai.booksourcing.main.domain.repository.UserProfileRepository
 import org.springframework.stereotype.Repository
 import tech.ydb.jooq.impl.YdbDSLContextImpl
@@ -15,20 +15,21 @@ class UserProfileRepositoryImpl(
 
     override fun findById(id: Long): UserProfile? {
         return dsl.selectFrom(USER_PROFILE)
-            .where(USER_PROFILE.ID.eq(org.jooq.types.ULong.valueOf(id)))
+            .where(USER_PROFILE.ID.eq(id))
             .fetchOne()
             ?.toModel()
     }
 
     override fun findByUserId(userId: Long): UserProfile? {
         return dsl.selectFrom(USER_PROFILE.useIndex(Indexes.USER_PROFILE__USER_ID__IDX.name))
-            .where(USER_PROFILE.USER_ID.eq(org.jooq.types.ULong.valueOf(userId)))
+            .where(USER_PROFILE.USER_ID.eq(userId))
             .fetchOne()
             ?.toModel()
     }
 
     override fun save(userProfile: UserProfile): UserProfile {
-        val record = userProfile.toRecord()
+        val record = userProfile
+            .copy(id = null).toRecord()
 
         dsl.insertInto(USER_PROFILE)
             .set(record)
@@ -38,11 +39,6 @@ class UserProfileRepositoryImpl(
     }
 
     override fun update(userProfile: UserProfile): UserProfile {
-        val oldProfile = findByUserId(userProfile.userId)
-        if (oldProfile != null && oldProfile.id != userProfile.id) {
-            throw IllegalArgumentException("User profile ID mismatch: cannot update the profile with a different ID.")
-        }
-
         val record = userProfile.toRecord()
 
         dsl.upsertInto(USER_PROFILE)
@@ -54,7 +50,7 @@ class UserProfileRepositoryImpl(
 
     override fun delete(id: Long) {
         dsl.deleteFrom(USER_PROFILE)
-            .where(USER_PROFILE.ID.eq(org.jooq.types.ULong.valueOf(id)))
+            .where(USER_PROFILE.ID.eq(id))
             .execute()
     }
 
@@ -62,8 +58,8 @@ class UserProfileRepositoryImpl(
         private fun UserProfile.toRecord(): UserProfileRecord {
             val record = UserProfileRecord()
 
-            id?.let { record.id = org.jooq.types.ULong.valueOf(it) }
-            userId.let { record.userId = org.jooq.types.ULong.valueOf(it) }
+            id?.let { record.id = it }
+            userId.let { record.userId = it }
 
             record.firstName = firstName
             record.lastName = lastName
@@ -76,8 +72,8 @@ class UserProfileRepositoryImpl(
         }
 
         private fun UserProfileRecord.toModel(): UserProfile = UserProfile(
-            id = id!!.toBigInteger()!!.longValueExact(),
-            userId = userId!!.toBigInteger()!!.longValueExact(),
+            id = id,
+            userId = userId,
             firstName = firstName,
             lastName = lastName,
             address = address,

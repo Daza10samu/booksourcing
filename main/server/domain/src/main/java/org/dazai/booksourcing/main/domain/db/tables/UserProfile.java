@@ -29,9 +29,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.types.ULong;
-
-import tech.ydb.jooq.binding.Uint64Binding;
 
 
 /**
@@ -63,12 +60,12 @@ public class UserProfile extends TableImpl<UserProfileRecord> {
     /**
      * The column <code>DEFAULT_SCHEMA.user_profile.id</code>.
      */
-    public final TableField<UserProfileRecord, ULong> ID = createField(DSL.name("id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<UserProfileRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.user_profile.user_id</code>.
      */
-    public final TableField<UserProfileRecord, ULong> USER_ID = createField(DSL.name("user_id"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "", new Uint64Binding());
+    public final TableField<UserProfileRecord, Long> USER_ID = createField(DSL.name("user_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.user_profile.first_name</code>.

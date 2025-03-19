@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    api(project(":domain"))
+    api(project(":auth:server:domain"))
 
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
