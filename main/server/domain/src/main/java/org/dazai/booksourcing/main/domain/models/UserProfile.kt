@@ -1,7 +1,6 @@
 package org.dazai.booksourcing.main.domain.models
 
 data class UserProfile(
-    val id: Long?,
     val userId: Long,
     val firstName: String,
     val lastName: String,

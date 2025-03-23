@@ -3,12 +3,7 @@ package org.dazai.booksourcing.main.api.v0
 import org.dazai.booksourcing.main.api.v0.dto.BookDto
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RequestMapping(
     value = ["/api/v0/book"],
@@ -17,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 interface BookApi {
     @PostMapping
-    fun createBook(bookDto: BookDto): ResponseEntity<String>
+    fun createBook(@RequestBody bookDto: BookDto): ResponseEntity<String>
 
     @GetMapping("/my")
     fun getMyBooks(): List<BookDto>

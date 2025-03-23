@@ -1,13 +1,16 @@
-package org.dazai.booksourcing.main.application.service.ws.service
+package org.dazai.booksourcing.main.web.ws.service
 
 import jakarta.annotation.PostConstruct
 import kotlinx.coroutines.*
+import org.dazai.booksourcing.main.web.ws.service.message.WsMessage
+import org.dazai.booksourcing.shared.createObjectMapper
 import org.springframework.stereotype.Service
 import org.springframework.web.socket.WebSocketSession
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 import org.dazai.booksourcing.shared.logger
 import org.springframework.web.socket.TextMessage
+import java.util.*
 
 @Service
 class WsSessionsManager {
@@ -42,16 +45,14 @@ class WsSessionsManager {
 
     operator fun get(sessionId: String): WebSocketSession? = sessions[sessionId]
 
-    fun broadcastMessage(message: String) {
-        val textMessage = TextMessage(message)
+    fun broadcastMessage(message: WsMessage) {
         coroutineScope.launch {
             sessions.values.forEach { session ->
                 if (session.isOpen) {
-                    session.sendMessage(textMessage)
+                    session.sendMessage(message)
                 }
             }
         }
-            .let { runBlocking { it.join()} }
     }
 
     private fun startSessionMonitoring() {
@@ -70,17 +71,19 @@ class WsSessionsManager {
     private suspend fun pingAndCleanSessions() {
         logger.info("Checking sessions")
 
-        val sessionsToRemove = mutableListOf<String>()
+        val sessionsToRemove:MutableList<String> = Collections.synchronizedList(mutableListOf())
 
         sessions.forEach { (id, session) ->
-            if (!session.isOpen) {
-                sessionsToRemove.add(id)
-            } else {
-                try {
-                    session.sendMessage(TextMessage("Ping"))
-                } catch (e: Exception) {
-                    logger.warn("Exception during ping session $id", e)
+            coroutineScope.launch {
+                if (!session.isOpen) {
                     sessionsToRemove.add(id)
+                } else {
+                    try {
+                        session.sendMessage(WsMessage.PingWsMessage())
+                    } catch (e: Exception) {
+                        logger.warn("Exception during ping session $id", e)
+                        sessionsToRemove.add(id)
+                    }
                 }
             }
         }
@@ -93,6 +96,14 @@ class WsSessionsManager {
                 logger.warn("Exception during closing session $id", e)
             }
             remove(id)
+        }
+    }
+
+    private suspend fun WebSocketSession.sendMessage(message: WsMessage) {
+        coroutineScope.launch {
+            if (isOpen) {
+                sendMessage(message.toTextMessage())
+            }
         }
     }
 }

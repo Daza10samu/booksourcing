@@ -121,7 +121,7 @@ public class Publication extends TableImpl<PublicationRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.asList(Indexes.PUBLICATION__OFFERED_BOOK_ID__IDX, Indexes.PUBLICATION__OWNER_ID__IDX, Indexes.PUBLICATION__STATUS__IDX);
+        return Arrays.asList(Indexes.PUBLICATION__OFFERED_BOOK_ID__IDX, Indexes.PUBLICATION__OFFERED_BOOK_ID__OWNER_ID__STATUS__IDX, Indexes.PUBLICATION__OWNER_ID__IDX, Indexes.PUBLICATION__STATUS__IDX);
     }
 
     @Override

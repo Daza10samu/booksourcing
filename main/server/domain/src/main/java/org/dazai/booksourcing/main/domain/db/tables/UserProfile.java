@@ -4,17 +4,13 @@
 package org.dazai.booksourcing.main.domain.db.tables;
 
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.dazai.booksourcing.main.domain.db.DefaultSchema;
-import org.dazai.booksourcing.main.domain.db.Indexes;
 import org.dazai.booksourcing.main.domain.db.Keys;
 import org.dazai.booksourcing.main.domain.db.tables.records.UserProfileRecord;
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
@@ -53,16 +49,6 @@ public class UserProfile extends TableImpl<UserProfileRecord> {
     }
 
     /**
-     * The column <code>DEFAULT_SCHEMA.user_profile.bio</code>.
-     */
-    public final TableField<UserProfileRecord, String> BIO = createField(DSL.name("bio"), SQLDataType.VARCHAR(4194304), this, "");
-
-    /**
-     * The column <code>DEFAULT_SCHEMA.user_profile.id</code>.
-     */
-    public final TableField<UserProfileRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false), this, "");
-
-    /**
      * The column <code>DEFAULT_SCHEMA.user_profile.user_id</code>.
      */
     public final TableField<UserProfileRecord, Long> USER_ID = createField(DSL.name("user_id"), SQLDataType.BIGINT.nullable(false), this, "");
@@ -86,6 +72,11 @@ public class UserProfile extends TableImpl<UserProfileRecord> {
      * The column <code>DEFAULT_SCHEMA.user_profile.phone</code>.
      */
     public final TableField<UserProfileRecord, String> PHONE = createField(DSL.name("phone"), SQLDataType.VARCHAR(4194304), this, "");
+
+    /**
+     * The column <code>DEFAULT_SCHEMA.user_profile.bio</code>.
+     */
+    public final TableField<UserProfileRecord, String> BIO = createField(DSL.name("bio"), SQLDataType.VARCHAR(4194304), this, "");
 
     private UserProfile(Name alias, Table<UserProfileRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -121,11 +112,6 @@ public class UserProfile extends TableImpl<UserProfileRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public List<Index> getIndexes() {
-        return Arrays.asList(Indexes.USER_PROFILE__USER_ID__IDX);
     }
 
     @Override

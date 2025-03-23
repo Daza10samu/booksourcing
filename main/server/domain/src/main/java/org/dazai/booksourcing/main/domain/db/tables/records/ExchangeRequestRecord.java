@@ -34,19 +34,31 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
     }
 
     /**
-     * Setter for
-     * <code>DEFAULT_SCHEMA.exchange_request.requested_book_id</code>.
+     * Setter for <code>DEFAULT_SCHEMA.exchange_request.owner_id</code>.
      */
-    public void setRequestedBookId(Long value) {
+    public void setOwnerId(Long value) {
         set(1, value);
     }
 
     /**
-     * Getter for
-     * <code>DEFAULT_SCHEMA.exchange_request.requested_book_id</code>.
+     * Getter for <code>DEFAULT_SCHEMA.exchange_request.owner_id</code>.
      */
-    public Long getRequestedBookId() {
+    public Long getOwnerId() {
         return (Long) get(1);
+    }
+
+    /**
+     * Setter for <code>DEFAULT_SCHEMA.exchange_request.owner_book_id</code>.
+     */
+    public void setOwnerBookId(Long value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>DEFAULT_SCHEMA.exchange_request.owner_book_id</code>.
+     */
+    public Long getOwnerBookId() {
+        return (Long) get(2);
     }
 
     /**
@@ -54,7 +66,7 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
      * <code>DEFAULT_SCHEMA.exchange_request.requestor_book_id</code>.
      */
     public void setRequestorBookId(Long value) {
-        set(2, value);
+        set(3, value);
     }
 
     /**
@@ -62,34 +74,20 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
      * <code>DEFAULT_SCHEMA.exchange_request.requestor_book_id</code>.
      */
     public Long getRequestorBookId() {
-        return (Long) get(2);
+        return (Long) get(3);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.exchange_request.requestor_id</code>.
      */
     public void setRequestorId(Long value) {
-        set(3, value);
+        set(4, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.exchange_request.requestor_id</code>.
      */
     public Long getRequestorId() {
-        return (Long) get(3);
-    }
-
-    /**
-     * Setter for <code>DEFAULT_SCHEMA.exchange_request.owner_id</code>.
-     */
-    public void setOwnerId(Long value) {
-        set(4, value);
-    }
-
-    /**
-     * Getter for <code>DEFAULT_SCHEMA.exchange_request.owner_id</code>.
-     */
-    public Long getOwnerId() {
         return (Long) get(4);
     }
 
@@ -200,14 +198,14 @@ public class ExchangeRequestRecord extends UpdatableRecordImpl<ExchangeRequestRe
     /**
      * Create a detached, initialised ExchangeRequestRecord
      */
-    public ExchangeRequestRecord(Long id, Long requestedBookId, Long requestorBookId, Long requestorId, Long ownerId, String status, Instant requestDate, Instant responseDate, Instant completionDate, Long fromPublication, String message) {
+    public ExchangeRequestRecord(Long id, Long ownerId, Long ownerBookId, Long requestorBookId, Long requestorId, String status, Instant requestDate, Instant responseDate, Instant completionDate, Long fromPublication, String message) {
         super(ExchangeRequest.EXCHANGE_REQUEST);
 
         setId(id);
-        setRequestedBookId(requestedBookId);
+        setOwnerId(ownerId);
+        setOwnerBookId(ownerBookId);
         setRequestorBookId(requestorBookId);
         setRequestorId(requestorId);
-        setOwnerId(ownerId);
         setStatus(status);
         setRequestDate(requestDate);
         setResponseDate(responseDate);

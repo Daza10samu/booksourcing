@@ -4,10 +4,10 @@ import java.time.Instant
 
 data class ExchangeRequest(
     val id: Long?,
-    val requestedBookId: Long,
+    val ownerId: Long,
+    val ownerBookId: Long,
     val requestorBookId: Long,
     val requestorId: Long,
-    val ownerId: Long,
     val status: ExchangeRequestStatus,
     val requestDate: Instant,
     val responseDate: Instant? = null,

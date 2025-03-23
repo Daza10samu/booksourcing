@@ -14,8 +14,7 @@ class UserProfileApiImpl(
 ) : UserProfileApi {
     override fun createUserProfile(userProfileDto: UserProfileDto): UserProfileDto {
         return userProfileService.createUserProfile(
-            userProfileDto.toModel()
-                .copy(id = null, userId = authInfo.userId)
+            userProfileDto.toModel(userId = authInfo.userId)
         ).toDto()
     }
 
@@ -24,17 +23,16 @@ class UserProfileApiImpl(
     }
 
     override fun getUserProfileById(id: Long): UserProfileDto {
-        return userProfileService.getUserProfileById(id)?.toDto() ?: throw EntityNotFoundException("User profile not found")
+        return userProfileService.getUserProfileByUserId(id)?.toDto() ?: throw EntityNotFoundException("User profile not found")
     }
 
     override fun updateUserProfile(userProfileDto: UserProfileDto): UserProfileDto {
-        return userProfileService.updateUserProfile(userProfileDto.toModel().copy(userId = authInfo.userId)).toDto()
+        return userProfileService.updateUserProfile(userProfileDto.toModel(authInfo.userId).copy(userId = authInfo.userId)).toDto()
     }
 
     companion object {
-        private fun UserProfileDto.toModel() = UserProfile(
-            id = id,
-            userId = userId,
+        private fun UserProfileDto.toModel(userId: Long? = null) = UserProfile(
+            userId = (userId ?: this@toModel.userId)!!,
             firstName = firstName,
             lastName = lastName,
             address = address,
@@ -43,7 +41,6 @@ class UserProfileApiImpl(
         )
 
         private fun UserProfile.toDto() = UserProfileDto(
-            id = id,
             userId = userId,
             firstName = firstName,
             lastName = lastName,

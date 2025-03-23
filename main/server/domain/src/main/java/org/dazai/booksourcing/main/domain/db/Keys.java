@@ -35,5 +35,5 @@ public class Keys {
     public static final UniqueKey<ExchangeRequestRecord> PK_EXCHANGE_REQUEST = Internal.createUniqueKey(ExchangeRequest.EXCHANGE_REQUEST, DSL.name("pk_exchange_request"), new TableField[] { ExchangeRequest.EXCHANGE_REQUEST.ID }, true);
     public static final UniqueKey<FlywaySchemaHistoryRecord> PK_FLYWAY_SCHEMA_HISTORY = Internal.createUniqueKey(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY, DSL.name("pk_flyway_schema_history"), new TableField[] { FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK }, true);
     public static final UniqueKey<PublicationRecord> PK_PUBLICATION = Internal.createUniqueKey(Publication.PUBLICATION, DSL.name("pk_publication"), new TableField[] { Publication.PUBLICATION.ID }, true);
-    public static final UniqueKey<UserProfileRecord> PK_USER_PROFILE = Internal.createUniqueKey(UserProfile.USER_PROFILE, DSL.name("pk_user_profile"), new TableField[] { UserProfile.USER_PROFILE.ID }, true);
+    public static final UniqueKey<UserProfileRecord> PK_USER_PROFILE = Internal.createUniqueKey(UserProfile.USER_PROFILE, DSL.name("pk_user_profile"), new TableField[] { UserProfile.USER_PROFILE.USER_ID }, true);
 }

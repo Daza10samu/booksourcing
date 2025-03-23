@@ -18,101 +18,87 @@ public class UserProfileRecord extends UpdatableRecordImpl<UserProfileRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>DEFAULT_SCHEMA.user_profile.bio</code>.
-     */
-    public void setBio(String value) {
-        set(0, value);
-    }
-
-    /**
-     * Getter for <code>DEFAULT_SCHEMA.user_profile.bio</code>.
-     */
-    public String getBio() {
-        return (String) get(0);
-    }
-
-    /**
-     * Setter for <code>DEFAULT_SCHEMA.user_profile.id</code>.
-     */
-    public void setId(Long value) {
-        set(1, value);
-    }
-
-    /**
-     * Getter for <code>DEFAULT_SCHEMA.user_profile.id</code>.
-     */
-    public Long getId() {
-        return (Long) get(1);
-    }
-
-    /**
      * Setter for <code>DEFAULT_SCHEMA.user_profile.user_id</code>.
      */
     public void setUserId(Long value) {
-        set(2, value);
+        set(0, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.user_profile.user_id</code>.
      */
     public Long getUserId() {
-        return (Long) get(2);
+        return (Long) get(0);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.user_profile.first_name</code>.
      */
     public void setFirstName(String value) {
-        set(3, value);
+        set(1, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.user_profile.first_name</code>.
      */
     public String getFirstName() {
-        return (String) get(3);
+        return (String) get(1);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.user_profile.last_name</code>.
      */
     public void setLastName(String value) {
-        set(4, value);
+        set(2, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.user_profile.last_name</code>.
      */
     public String getLastName() {
-        return (String) get(4);
+        return (String) get(2);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.user_profile.address</code>.
      */
     public void setAddress(String value) {
-        set(5, value);
+        set(3, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.user_profile.address</code>.
      */
     public String getAddress() {
-        return (String) get(5);
+        return (String) get(3);
     }
 
     /**
      * Setter for <code>DEFAULT_SCHEMA.user_profile.phone</code>.
      */
     public void setPhone(String value) {
-        set(6, value);
+        set(4, value);
     }
 
     /**
      * Getter for <code>DEFAULT_SCHEMA.user_profile.phone</code>.
      */
     public String getPhone() {
-        return (String) get(6);
+        return (String) get(4);
+    }
+
+    /**
+     * Setter for <code>DEFAULT_SCHEMA.user_profile.bio</code>.
+     */
+    public void setBio(String value) {
+        set(5, value);
+    }
+
+    /**
+     * Getter for <code>DEFAULT_SCHEMA.user_profile.bio</code>.
+     */
+    public String getBio() {
+        return (String) get(5);
     }
 
     // -------------------------------------------------------------------------
@@ -138,16 +124,15 @@ public class UserProfileRecord extends UpdatableRecordImpl<UserProfileRecord> {
     /**
      * Create a detached, initialised UserProfileRecord
      */
-    public UserProfileRecord(String bio, Long id, Long userId, String firstName, String lastName, String address, String phone) {
+    public UserProfileRecord(Long userId, String firstName, String lastName, String address, String phone, String bio) {
         super(UserProfile.USER_PROFILE);
 
-        setBio(bio);
-        setId(id);
         setUserId(userId);
         setFirstName(firstName);
         setLastName(lastName);
         setAddress(address);
         setPhone(phone);
+        setBio(bio);
         resetChangedOnNotNull();
     }
 }

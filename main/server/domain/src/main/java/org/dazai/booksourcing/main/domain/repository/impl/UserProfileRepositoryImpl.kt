@@ -13,23 +13,15 @@ class UserProfileRepositoryImpl(
     private val dsl: YdbDSLContextImpl,
 ) : UserProfileRepository {
 
-    override fun findById(id: Long): UserProfile? {
-        return dsl.selectFrom(USER_PROFILE)
-            .where(USER_PROFILE.ID.eq(id))
-            .fetchOne()
-            ?.toModel()
-    }
-
     override fun findByUserId(userId: Long): UserProfile? {
-        return dsl.selectFrom(USER_PROFILE.useIndex(Indexes.USER_PROFILE__USER_ID__IDX.name))
+        return dsl.selectFrom(USER_PROFILE)
             .where(USER_PROFILE.USER_ID.eq(userId))
             .fetchOne()
             ?.toModel()
     }
 
     override fun save(userProfile: UserProfile): UserProfile {
-        val record = userProfile
-            .copy(id = null).toRecord()
+        val record = userProfile.toRecord()
 
         dsl.insertInto(USER_PROFILE)
             .set(record)
@@ -50,7 +42,7 @@ class UserProfileRepositoryImpl(
 
     override fun delete(id: Long) {
         dsl.deleteFrom(USER_PROFILE)
-            .where(USER_PROFILE.ID.eq(id))
+            .where(USER_PROFILE.USER_ID.eq(id))
             .execute()
     }
 
@@ -58,7 +50,6 @@ class UserProfileRepositoryImpl(
         private fun UserProfile.toRecord(): UserProfileRecord {
             val record = UserProfileRecord()
 
-            id?.let { record.id = it }
             userId.let { record.userId = it }
 
             record.firstName = firstName
@@ -72,7 +63,6 @@ class UserProfileRepositoryImpl(
         }
 
         private fun UserProfileRecord.toModel(): UserProfile = UserProfile(
-            id = id,
             userId = userId,
             firstName = firstName,
             lastName = lastName,

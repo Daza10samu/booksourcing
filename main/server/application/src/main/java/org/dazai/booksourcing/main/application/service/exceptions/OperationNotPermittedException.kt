@@ -7,4 +7,4 @@ import org.springframework.web.bind.annotation.ResponseStatus
 class OperationNotPermittedException(
     message: String? = null,
     throwable: Throwable? = null,
-) : Exception(message, throwable)
+) : ApplicationException(message, throwable)

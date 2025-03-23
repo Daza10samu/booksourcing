@@ -1,16 +1,18 @@
 package org.dazai.booksourcing.main.domain.repository.impl
 
 import org.dazai.booksourcing.main.domain.db.Indexes
+import org.dazai.booksourcing.main.domain.db.Tables.PUBLICATION
 import org.dazai.booksourcing.main.domain.db.tables.records.PublicationRecord
 import org.dazai.booksourcing.main.domain.models.ExchangePublication
 import org.dazai.booksourcing.main.domain.repository.ExchangePublicationRepository
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.support.TransactionTemplate
 import tech.ydb.jooq.impl.YdbDSLContextImpl
-import org.dazai.booksourcing.main.domain.db.Tables.PUBLICATION
 
 @Repository
 class ExchangePublicationRepositoryImpl(
     private val dsl: YdbDSLContextImpl,
+    private val transactionTemplate: TransactionTemplate,
 ) : ExchangePublicationRepository {
 
     override fun findById(id: Long): ExchangePublication? {
@@ -41,13 +43,28 @@ class ExchangePublicationRepositoryImpl(
             .map { it.toModel() }
     }
 
-    override fun save(exchangePublication: ExchangePublication) {
-        val record = exchangePublication
-            .copy(id = null).toRecord()
+    override fun save(exchangePublication: ExchangePublication): ExchangePublication {
+        return transactionTemplate.execute {
+            dsl.selectFrom(PUBLICATION.useIndex(Indexes.PUBLICATION__OFFERED_BOOK_ID__OWNER_ID__STATUS__IDX.name))
+                .where(PUBLICATION.OWNER_ID.eq(exchangePublication.ownerId))
+                .and(PUBLICATION.OFFERED_BOOK_ID.eq(exchangePublication.offeredBookId))
+                .and(PUBLICATION.STATUS.eq(ExchangePublication.PublicationStatus.ACTIVE.name))
+                .fetchOne()?.let { throw IllegalStateException("This publication already exists") }
 
-        dsl.insertInto(PUBLICATION)
-            .set(record)
-            .execute()
+            val record = exchangePublication
+                .copy(id = null, status = ExchangePublication.PublicationStatus.ACTIVE).toRecord()
+
+            dsl.upsertInto(PUBLICATION)
+                .set(record)
+                .execute()
+
+            dsl.selectFrom(PUBLICATION)
+                .where(PUBLICATION.OWNER_ID.eq(exchangePublication.ownerId))
+                .and(PUBLICATION.OFFERED_BOOK_ID.eq(exchangePublication.offeredBookId))
+                .and(PUBLICATION.STATUS.eq(ExchangePublication.PublicationStatus.ACTIVE.name))
+                .fetchOne()!!
+                .toModel()
+        }!!
     }
 
     override fun update(exchangePublication: ExchangePublication): ExchangePublication {

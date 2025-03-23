@@ -17,7 +17,7 @@ class BookApiImpl(
 ) : BookApi {
     override fun createBook(bookDto: BookDto): ResponseEntity<String> {
         val userProfile = userProfileService.getCurrentUserProfileOrThrow()
-        bookService.createBook(bookDto.toModel().copy(ownerId = userProfile.id!!))
+        bookService.createBook(bookDto.toModel().copy(ownerId = userProfile.userId))
 
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
@@ -25,7 +25,7 @@ class BookApiImpl(
     override fun getMyBooks(): List<BookDto> {
         val userProfile = userProfileService.getCurrentUserProfileOrThrow()
 
-        return bookService.getBooksByOwnerId(userProfile.id!!)
+        return bookService.getBooksByOwnerId(userProfile.userId)
             .map { it.toDto() }
     }
 

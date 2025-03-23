@@ -1,6 +1,7 @@
 package org.dazai.booksourcing.main.web.ws
 
-import org.dazai.booksourcing.main.application.service.ws.service.WsSessionsManager
+import org.dazai.booksourcing.main.web.ws.service.WsSessionsManager
+import org.dazai.booksourcing.main.web.ws.service.message.WsMessage
 import org.dazai.booksourcing.shared.logger
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.CloseStatus
@@ -23,11 +24,7 @@ class MyWebSocketHandler(
         val payload = message.payload
         logger.info("Received message: " + payload + " from " + session.id)
 
-
         session.sendMessage(TextMessage("Server received: $payload"))
-
-
-        wsSessionsManager.broadcastMessage("Broadcast: $payload")
     }
 
     override fun afterConnectionClosed(session: WebSocketSession, status: CloseStatus) {

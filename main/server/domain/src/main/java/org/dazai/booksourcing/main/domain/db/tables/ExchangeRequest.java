@@ -61,10 +61,14 @@ public class ExchangeRequest extends TableImpl<ExchangeRequestRecord> {
     public final TableField<ExchangeRequestRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
-     * The column
-     * <code>DEFAULT_SCHEMA.exchange_request.requested_book_id</code>.
+     * The column <code>DEFAULT_SCHEMA.exchange_request.owner_id</code>.
      */
-    public final TableField<ExchangeRequestRecord, Long> REQUESTED_BOOK_ID = createField(DSL.name("requested_book_id"), SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<ExchangeRequestRecord, Long> OWNER_ID = createField(DSL.name("owner_id"), SQLDataType.BIGINT.nullable(false), this, "");
+
+    /**
+     * The column <code>DEFAULT_SCHEMA.exchange_request.owner_book_id</code>.
+     */
+    public final TableField<ExchangeRequestRecord, Long> OWNER_BOOK_ID = createField(DSL.name("owner_book_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column
@@ -76,11 +80,6 @@ public class ExchangeRequest extends TableImpl<ExchangeRequestRecord> {
      * The column <code>DEFAULT_SCHEMA.exchange_request.requestor_id</code>.
      */
     public final TableField<ExchangeRequestRecord, Long> REQUESTOR_ID = createField(DSL.name("requestor_id"), SQLDataType.BIGINT.nullable(false), this, "");
-
-    /**
-     * The column <code>DEFAULT_SCHEMA.exchange_request.owner_id</code>.
-     */
-    public final TableField<ExchangeRequestRecord, Long> OWNER_ID = createField(DSL.name("owner_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>DEFAULT_SCHEMA.exchange_request.status</code>.
@@ -150,7 +149,7 @@ public class ExchangeRequest extends TableImpl<ExchangeRequestRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.asList(Indexes.EXCHANGE_REQUEST__OWNER_ID__IDX, Indexes.EXCHANGE_REQUEST__REQUESTED_BOOK_ID__IDX, Indexes.EXCHANGE_REQUEST__REQUESTOR_BOOK_ID__IDX, Indexes.EXCHANGE_REQUEST__REQUESTOR_ID__IDX, Indexes.EXCHANGE_REQUEST__STATUS__IDX);
+        return Arrays.asList(Indexes.EXCHANGE_REQUEST__OWNER_BOOK_ID__IDX, Indexes.EXCHANGE_REQUEST__OWNER_ID__IDX, Indexes.EXCHANGE_REQUEST__REQUESTOR_BOOK_ID__IDX, Indexes.EXCHANGE_REQUEST__REQUESTOR_ID__IDX, Indexes.EXCHANGE_REQUEST__STATUS__IDX, Indexes.EXCHANGE_REQUEST__UIDX);
     }
 
     @Override

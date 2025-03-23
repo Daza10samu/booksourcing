@@ -12,10 +12,6 @@ import org.springframework.stereotype.Service
 class UserProfileService(
     private val userProfileRepository: UserProfileRepository,
 ) {
-    fun getUserProfileById(id: Long): UserProfile? {
-        return userProfileRepository.findById(id)
-    }
-
     fun getUserProfileByUserId(userId: Long): UserProfile? {
         return userProfileRepository.findByUserId(userId)
     }
@@ -28,7 +24,7 @@ class UserProfileService(
         val oldProfile = userProfileRepository.findByUserId(userProfile.userId)
             ?: throw EntityNotFoundException("User profile not found: cannot update the profile.")
 
-        if (oldProfile.id != userProfile.id) {
+        if (oldProfile.userId != userProfile.userId) {
             throw InvalidUpdateProfileOperationException("It looks like you are trying to update a different profile.")
         }
 

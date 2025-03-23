@@ -48,9 +48,9 @@ class ExchangeRequestRepositoryImpl(
     }
 
     override fun findByRequestedBookId(bookId: Long): List<ExchangeRequest> {
-        return dsl.selectFrom(EXCHANGE_REQUEST.useIndex(Indexes.EXCHANGE_REQUEST__REQUESTED_BOOK_ID__IDX.name))
+        return dsl.selectFrom(EXCHANGE_REQUEST.useIndex(Indexes.EXCHANGE_REQUEST__OWNER_BOOK_ID__IDX.name))
             .where(
-                EXCHANGE_REQUEST.REQUESTED_BOOK_ID.eq(bookId)
+                EXCHANGE_REQUEST.OWNER_BOOK_ID.eq(bookId)
             )
             .fetch()
             .map { it.toModel() }
@@ -65,13 +65,30 @@ class ExchangeRequestRepositoryImpl(
             .map { it.toModel() }
     }
 
-    override fun save(exchangeRequest: ExchangeRequest) {
+    override fun save(exchangeRequest: ExchangeRequest): ExchangeRequest {
+        dsl.selectFrom(EXCHANGE_REQUEST.useIndex(Indexes.EXCHANGE_REQUEST__UIDX.name))
+            .where(EXCHANGE_REQUEST.REQUESTOR_ID.eq(exchangeRequest.requestorId))
+            .and(EXCHANGE_REQUEST.OWNER_ID.eq(exchangeRequest.ownerId))
+            .and(EXCHANGE_REQUEST.REQUESTOR_BOOK_ID.eq(exchangeRequest.requestorBookId))
+            .and(EXCHANGE_REQUEST.OWNER_BOOK_ID.eq(exchangeRequest.ownerBookId))
+            .and(EXCHANGE_REQUEST.STATUS.eq(ExchangeRequest.ExchangeRequestStatus.PENDING.name))
+            .fetchOne()?.let { throw IllegalStateException("There is already an exchange request for this book.") }
+
         val record = exchangeRequest
             .copy(id = null).toRecord()
 
         dsl.insertInto(EXCHANGE_REQUEST)
             .set(record)
             .execute()
+
+        return dsl.selectFrom(EXCHANGE_REQUEST.useIndex(Indexes.EXCHANGE_REQUEST__UIDX.name))
+            .where(EXCHANGE_REQUEST.REQUESTOR_ID.eq(exchangeRequest.requestorId))
+            .and(EXCHANGE_REQUEST.OWNER_ID.eq(exchangeRequest.ownerId))
+            .and(EXCHANGE_REQUEST.REQUESTOR_BOOK_ID.eq(exchangeRequest.requestorBookId))
+            .and(EXCHANGE_REQUEST.OWNER_BOOK_ID.eq(exchangeRequest.ownerBookId))
+            .and(EXCHANGE_REQUEST.STATUS.eq(ExchangeRequest.ExchangeRequestStatus.PENDING.name))
+            .fetchOne()!!
+            .toModel()
     }
 
     override fun update(exchangeRequest: ExchangeRequest): ExchangeRequest {
@@ -105,24 +122,24 @@ class ExchangeRequestRepositoryImpl(
             val record = ExchangeRequestRecord()
 
             id?.let { record.id = it }
-            requestedBookId.let { record.requestedBookId = it }
+            ownerBookId.let { record.ownerBookId = it }
             requestorBookId.let { record.requestorBookId = it }
             requestorId.let { record.requestorId = it }
             ownerId.let { record.ownerId = it }
 
             record.status = status.name
             record.requestDate = requestDate
-            record.responseDate = responseDate
-            record.completionDate = completionDate
-            record.message = message
-            record.fromPublication = fromPublicationId
+            responseDate?.let { record.responseDate = it }
+            completionDate?.let { record.completionDate = it }
+            fromPublicationId?.let { record.fromPublication = it }
+            message?.let { record.message = it }
 
             return record
         }
 
         private fun ExchangeRequestRecord.toModel(): ExchangeRequest = ExchangeRequest(
             id,
-            requestedBookId,
+            ownerBookId,
             requestorBookId,
             requestorId,
             ownerId,

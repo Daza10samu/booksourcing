@@ -9,7 +9,7 @@ interface ExchangeRequestRepository {
     fun findByStatus(status: String): List<ExchangeRequest>
     fun findByRequestedBookId(bookId: Long): List<ExchangeRequest>
     fun findByRequestorBookId(bookId: Long): List<ExchangeRequest>
-    fun save(exchangeRequest: ExchangeRequest)
+    fun save(exchangeRequest: ExchangeRequest): ExchangeRequest
     fun update(exchangeRequest: ExchangeRequest): ExchangeRequest
     fun delete(id: Long)
 }

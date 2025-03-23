@@ -7,7 +7,7 @@ interface ExchangePublicationRepository {
     fun findByOfferedBookId(bookId: Long): ExchangePublication?
     fun findByOwnerId(ownerId: Long): List<ExchangePublication>
     fun findByStatus(status: String): List<ExchangePublication>
-    fun save(exchangePublication: ExchangePublication)
+    fun save(exchangePublication: ExchangePublication): ExchangePublication
     fun update(exchangePublication: ExchangePublication): ExchangePublication
     fun delete(id: Long)
     fun findActivePublications(): List<ExchangePublication>

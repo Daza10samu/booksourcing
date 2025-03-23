@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 class EntityNotFoundException(
     message: String? = null,
     throwable: Throwable? = null,
-): Exception(
+): ApplicationException(
     message,
     throwable
 )

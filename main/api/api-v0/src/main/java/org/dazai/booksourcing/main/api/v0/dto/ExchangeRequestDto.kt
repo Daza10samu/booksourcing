@@ -4,7 +4,7 @@ import java.time.Instant
 
 data class ExchangeRequestDto(
     val id: Long?,
-    val requestedBookId: Long,
+    val ownerBookId: Long,
     val requestorBookId: Long,
     val requestorId: Long,
     val ownerId: Long,
@@ -12,7 +12,8 @@ data class ExchangeRequestDto(
     val requestDate: Instant,
     val responseDate: Instant? = null,
     val completionDate: Instant? = null,
-    val message: String? = null
+    val message: String? = null,
+    val fromPublicationId: Long? = null,
 ) {
     enum class ExchangeRequestStatus {
         PENDING, ACCEPTED, REJECTED, COMPLETED

@@ -7,7 +7,6 @@ package org.dazai.booksourcing.main.domain.db;
 import org.dazai.booksourcing.main.domain.db.tables.Book;
 import org.dazai.booksourcing.main.domain.db.tables.ExchangeRequest;
 import org.dazai.booksourcing.main.domain.db.tables.Publication;
-import org.dazai.booksourcing.main.domain.db.tables.UserProfile;
 import org.jooq.Index;
 import org.jooq.OrderField;
 import org.jooq.impl.DSL;
@@ -28,13 +27,14 @@ public class Indexes {
     public static final Index BOOK__GENRE__IDX = Internal.createIndex(DSL.name("book__genre__idx"), Book.BOOK, new OrderField[] { Book.BOOK.GENRE }, false);
     public static final Index BOOK__OWNER_ID__IDX = Internal.createIndex(DSL.name("book__owner_id__idx"), Book.BOOK, new OrderField[] { Book.BOOK.OWNER_ID }, false);
     public static final Index BOOK__STATUS__IDX = Internal.createIndex(DSL.name("book__status__idx"), Book.BOOK, new OrderField[] { Book.BOOK.STATUS }, false);
+    public static final Index EXCHANGE_REQUEST__OWNER_BOOK_ID__IDX = Internal.createIndex(DSL.name("exchange_request__owner_book_id__idx"), ExchangeRequest.EXCHANGE_REQUEST, new OrderField[] { ExchangeRequest.EXCHANGE_REQUEST.OWNER_BOOK_ID }, false);
     public static final Index EXCHANGE_REQUEST__OWNER_ID__IDX = Internal.createIndex(DSL.name("exchange_request__owner_id__idx"), ExchangeRequest.EXCHANGE_REQUEST, new OrderField[] { ExchangeRequest.EXCHANGE_REQUEST.OWNER_ID }, false);
-    public static final Index EXCHANGE_REQUEST__REQUESTED_BOOK_ID__IDX = Internal.createIndex(DSL.name("exchange_request__requested_book_id__idx"), ExchangeRequest.EXCHANGE_REQUEST, new OrderField[] { ExchangeRequest.EXCHANGE_REQUEST.REQUESTED_BOOK_ID }, false);
     public static final Index EXCHANGE_REQUEST__REQUESTOR_BOOK_ID__IDX = Internal.createIndex(DSL.name("exchange_request__requestor_book_id__idx"), ExchangeRequest.EXCHANGE_REQUEST, new OrderField[] { ExchangeRequest.EXCHANGE_REQUEST.REQUESTOR_BOOK_ID }, false);
     public static final Index EXCHANGE_REQUEST__REQUESTOR_ID__IDX = Internal.createIndex(DSL.name("exchange_request__requestor_id__idx"), ExchangeRequest.EXCHANGE_REQUEST, new OrderField[] { ExchangeRequest.EXCHANGE_REQUEST.REQUESTOR_ID }, false);
     public static final Index EXCHANGE_REQUEST__STATUS__IDX = Internal.createIndex(DSL.name("exchange_request__status__idx"), ExchangeRequest.EXCHANGE_REQUEST, new OrderField[] { ExchangeRequest.EXCHANGE_REQUEST.STATUS }, false);
+    public static final Index EXCHANGE_REQUEST__UIDX = Internal.createIndex(DSL.name("exchange_request__uidx"), ExchangeRequest.EXCHANGE_REQUEST, new OrderField[] { ExchangeRequest.EXCHANGE_REQUEST.REQUESTOR_ID, ExchangeRequest.EXCHANGE_REQUEST.OWNER_ID, ExchangeRequest.EXCHANGE_REQUEST.OWNER_BOOK_ID, ExchangeRequest.EXCHANGE_REQUEST.REQUESTOR_BOOK_ID }, false);
     public static final Index PUBLICATION__OFFERED_BOOK_ID__IDX = Internal.createIndex(DSL.name("publication__offered_book_id__idx"), Publication.PUBLICATION, new OrderField[] { Publication.PUBLICATION.OFFERED_BOOK_ID }, false);
+    public static final Index PUBLICATION__OFFERED_BOOK_ID__OWNER_ID__STATUS__IDX = Internal.createIndex(DSL.name("publication__offered_book_id__owner_id__status__idx"), Publication.PUBLICATION, new OrderField[] { Publication.PUBLICATION.OFFERED_BOOK_ID, Publication.PUBLICATION.OWNER_ID, Publication.PUBLICATION.STATUS }, false);
     public static final Index PUBLICATION__OWNER_ID__IDX = Internal.createIndex(DSL.name("publication__owner_id__idx"), Publication.PUBLICATION, new OrderField[] { Publication.PUBLICATION.OWNER_ID }, false);
     public static final Index PUBLICATION__STATUS__IDX = Internal.createIndex(DSL.name("publication__status__idx"), Publication.PUBLICATION, new OrderField[] { Publication.PUBLICATION.STATUS }, false);
-    public static final Index USER_PROFILE__USER_ID__IDX = Internal.createIndex(DSL.name("user_profile__user_id__idx"), UserProfile.USER_PROFILE, new OrderField[] { UserProfile.USER_PROFILE.USER_ID }, false);
 }

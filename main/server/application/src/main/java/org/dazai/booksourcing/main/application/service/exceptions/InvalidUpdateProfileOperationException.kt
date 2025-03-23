@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 class InvalidUpdateProfileOperationException(
     message: String? = null,
     throwable: Throwable? = null,
-): Exception(
+): ApplicationException(
     message,
     throwable
 )
