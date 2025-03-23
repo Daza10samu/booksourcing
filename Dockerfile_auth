@@ -5,7 +5,7 @@ COPY . .
 
 RUN ./gradlew :auth:server:standalone:bootJar
 
-FROM azul/zulu-openjdk:21-jre
+FROM azul/zulu-openjdk:21
 
 WORKDIR /app
 
