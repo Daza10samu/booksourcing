@@ -15,7 +15,7 @@ services:
     ports:
       - "8090:8090"
     secrets:
-      - ydb_auth_service_account_service_key
+      - ydb_auth_service_account_service_key.json
     networks:
       - booksourcing-network
     depends_on:
@@ -33,14 +33,14 @@ services:
       - JWT_SECRET_ACCESS=
       - JWT_SECRET_REFRESH=
     secrets:
-      - ydb_auth_service_account_service_key
+      - ydb_auth_service_account_service_key.json
     ports:
       - "8080:8080"
     networks:
       - booksourcing-network
 
 secrets:
-  ydb_auth_service_account_service_key:
+  ydb_auth_service_account_service_key.json:
     file: ./secrets/authorized_key.json
 
 networks:

@@ -12,6 +12,7 @@ class JwtRevokedFromYdbListener(
     override val topicPath: String,
 ) : AbstractYdbTopicListener<JwtToken>(topicClient) {
     override fun doJobWithObject(message: Message, obj: JwtToken) {
+        log.info("Received revoked jwt token: $obj")
         jwtRevokedCacheFromYdbTopics.addRevoked(obj)
     }
 }
