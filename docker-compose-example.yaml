@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  main:
+    image: ${REGISTRY_URL}/booksourcing-main:latest
+    container_name: booksourcing-main
+    restart: unless-stopped
+    environment:
+      - YDB_AUTH_JDBC_URL=
+      - YDB_AUTH_SERVICE_ACCOUNT_SERVICE_KEY_PATH=/run/secrets/ydb_auth_service_account_service_key
+      - YDB_AUTH_SERVICE_CONNECTION_STRING=
+      - YDB_TOPIC_REVOKED_ACCESS=
+      - YDB_TOPIC_REVOKED_ACCESS_LISTENER=
+      - JWT_SECRET_ACCESS=
+    ports:
+      - "8090:8090"
+    secrets:
+      - ydb_auth_service_account_service_key
+    networks:
+      - booksourcing-network
+    depends_on:
+      - auth
+
+  auth:
+    image: ${REGISTRY_URL}/booksourcing-auth:latest
+    container_name: booksourcing-auth
+    restart: unless-stopped
+    environment:
+      - YDB_AUTH_JDBC_URL=
+      - YDB_AUTH_SERVICE_ACCOUNT_SERVICE_KEY_PATH=/run/secrets/ydb_auth_service_account_service_key
+      - YDB_AUTH_SERVICE_CONNECTION_STRING=
+      - YDB_TOPIC_REVOKED_ACCESS=
+      - JWT_SECRET_ACCESS=
+      - JWT_SECRET_REFRESH=
+    secrets:
+      - ydb_auth_service_account_service_key
+    ports:
+      - "8080:8080"
+    networks:
+      - booksourcing-network
+
+secrets:
+  ydb_auth_service_account_service_key:
+    file: ./secrets/authorized_key.json
+
+networks:
+  booksourcing-network:

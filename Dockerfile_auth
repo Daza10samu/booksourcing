@@ -11,4 +11,4 @@ WORKDIR /app
 
 COPY --from=build /app/auth/server/standalone/build/libs/standalone-0.0.1-SNAPSHOT.jar /app/standalone.jar
 
-ENTRYPOINT ["java", "-jar", "/app/standalone.jar"]
+ENTRYPOINT ["java", "-XX:+UseZGC", "-Xmx4g", "-jar", "/app/standalone.jar"]
