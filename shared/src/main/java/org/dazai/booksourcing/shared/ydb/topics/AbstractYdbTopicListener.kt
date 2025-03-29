@@ -20,11 +20,10 @@ abstract class AbstractYdbTopicListener<T>(
     protected abstract val topicPath: String
     protected open val shouldCommit: Boolean = false
     protected open val shouldCommitOnFailure: Boolean = true
-    protected val typeReference = object : TypeReference<T>() {}
 
-    protected open fun deserialize(data: ByteArray) = objectMapper.readValue(data, typeReference)
+    protected abstract fun deserialize(data: ByteArray): T
 
-    fun init() {
+    open fun init() {
         val readerSettings = ReaderSettings.newBuilder()
             .setConsumerName(listenerName)
             .addTopic(
@@ -40,18 +39,16 @@ abstract class AbstractYdbTopicListener<T>(
                     event.messages.map { message ->
                         log.debug("Message received: ${String(message.data)}")
 
-                        var ok = true
                         try {
                             doJob(message)
+                            if (shouldCommit) {
+                                message.commit()
+                            }
                         } catch (e: Exception) {
                             log.error("Exception on doJob: ", e)
-                            ok = false
                             if (shouldCommitOnFailure && shouldCommit) {
                                 message.commit()
                             }
-                        }
-                        if (ok && shouldCommit) {
-                            message.commit()
                         }
                     }
                 }
@@ -73,6 +70,7 @@ abstract class AbstractYdbTopicListener<T>(
     }
 
     companion object {
+        @JvmStatic
         protected val objectMapper = createObjectMapper()
     }
 }

@@ -138,17 +138,17 @@ class ExchangeRequestRepositoryImpl(
         }
 
         private fun ExchangeRequestRecord.toModel(): ExchangeRequest = ExchangeRequest(
-            id,
-            ownerBookId,
-            requestorBookId,
-            requestorId,
-            ownerId,
-            ExchangeRequest.ExchangeRequestStatus.valueOf(status),
-            requestDate,
-            responseDate,
-            completionDate,
-            message,
-            fromPublication
+            id = id,
+            ownerBookId = ownerBookId,
+            requestorBookId = requestorBookId,
+            requestorId = requestorId,
+            ownerId = ownerId,
+            status = ExchangeRequest.ExchangeRequestStatus.valueOf(status),
+            requestDate = requestDate,
+            responseDate = responseDate,
+            completionDate = completionDate,
+            message = message,
+            fromPublicationId = fromPublication,
         )
     }
 }

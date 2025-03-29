@@ -45,10 +45,16 @@ class ExchangePublicationService(
     }
 
     fun createPublication(exchangePublication: ExchangePublication): ExchangePublication {
-        return exchangePublicationRepository.save(
-            exchangePublication
-                .copy(createdDate = clock.instant())
-        )
+        return transactionTemplate.execute{
+            val book = bookService.getBookById(exchangePublication.offeredBookId) ?: throw EntityNotFoundException("Book not found.")
+            if (book.status != Book.BookStatus.AVAILABLE) throw IllegalStateException("Book is not available.")
+            if (book.ownerId != exchangePublication.ownerId) throw OperationNotPermittedException("Book is not owned by the owner.")
+
+            exchangePublicationRepository.save(
+                exchangePublication
+                    .copy(createdDate = clock.instant())
+            )
+        }!!
     }
 
     fun updatePublication(exchangePublication: ExchangePublication): ExchangePublication {
@@ -89,9 +95,7 @@ class ExchangePublicationService(
 
                 processExchangePublication(exchangePublication, ownerBook, requestorBook)
 
-                exchangeService.createExchangeRequest(exchangeRequest)
-
-                return@execute exchangeRequest
+                return@execute exchangeService.createExchangeRequest(exchangeRequest)
             }!!
         } catch (e: EntityNotFoundException) {
             throw e

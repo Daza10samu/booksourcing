@@ -58,6 +58,7 @@ class ExchangeRequestApiImpl(
             responseDate = responseDate,
             completionDate = completionDate,
             message = message,
+            fromPublicationId = fromPublicationId,
         )
     }
 }

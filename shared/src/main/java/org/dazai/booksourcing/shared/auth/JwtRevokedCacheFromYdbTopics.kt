@@ -25,7 +25,7 @@ class JwtRevokedCacheFromYdbTopics(
     }
 
     override fun isRevoked(token: String): Boolean {
-        return map.contains(token)
+        return map.keys.contains(token)
     }
 
     override fun allRevoked(): Set<String> {

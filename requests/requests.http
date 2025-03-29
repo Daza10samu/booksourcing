@@ -1,0 +1,96 @@
+### Register
+POST {{url_auth}}/api/v0/users/register
+Content-Type: application/json
+
+{
+  "password": "123",
+  "username": "123"
+}
+
+### Login
+POST {{url_auth}}/api/v0/users/auth
+Content-Type: application/json
+
+{
+  "password": "123",
+  "username": "123"
+}
+
+### Drop all tokens
+PUT {{url_auth}}/api/v0/users/dropAllSessions
+Authorization: Bearer {{auth_token}}
+
+### Create user profile
+POST {{url_main}}/api/v0/user-profile
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "bio": "adasd",
+  "firstName": "asdasda",
+  "lastName": "asdasdasd",
+  "address": "asdasdasd",
+  "phone": "+77777777"
+}
+
+### Add book
+POST {{url_main}}/api/v0/book
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "ownerId": 0,
+  "author": "asdasdsad",
+  "title": "",
+  "genre": "",
+  "condition": "NEW",
+  "status": "AVAILABLE",
+  "addedDate": "2025-01-01T10:00:00Z"
+}
+
+### Get my books
+GET {{url_main}}/api/v0/book/my
+Authorization: Bearer {{auth_token}}
+
+### Create publication
+POST {{url_main}}/api/v0/exchange-publications
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "offeredBookId": 5,
+  "ownerId": 0,
+  "offerDetails": "Tg @SomeTgForContact",
+  "status": "ACTIVE",
+  "createdDate": "2025-01-01T10:00:00Z"
+}
+
+### Get publications
+GET {{url_main}}/api/v0/exchange-publications
+Authorization: Bearer {{auth_token}}
+
+### Accept publication
+POST {{url_main}}/api/v0/exchange-publications/5/accept
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "offeredBookId": 8,
+  "requestDetails": ""
+}
+
+### My echange requests
+GET {{url_main}}/api/v0/exchange-requests/my
+Authorization: Bearer {{auth_token}}
+
+### Reject
+PUT {{url_main}}/api/v0/exchange-requests/4/reject
+Authorization: Bearer {{auth_token}}
+
+### Accept
+PUT {{url_main}}/api/v0/exchange-requests/5/accept
+Authorization: Bearer {{auth_token}}
+
+### Complete
+PUT {{url_main}}/api/v0/exchange-requests/5/complete
+Authorization: Bearer {{auth_token}}

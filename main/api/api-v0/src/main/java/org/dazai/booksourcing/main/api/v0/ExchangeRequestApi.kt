@@ -24,7 +24,7 @@ interface ExchangeRequestApi {
     fun completeExchangeRequest(@PathVariable id: Long): ResponseEntity<String>
 
     data class ExchangeRequestSplitDto(
-        private val incoming: List<ExchangeRequestDto>,
-        private val outgoing: List<ExchangeRequestDto>,
+     val incoming: List<ExchangeRequestDto>,
+     val outgoing: List<ExchangeRequestDto>,
     )
 }
