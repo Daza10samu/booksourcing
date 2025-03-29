@@ -2,12 +2,18 @@ version: '3.8'
 
 services:
   main:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
     image: ${REGISTRY_URL}/booksourcing-main:latest
     container_name: booksourcing-main
     restart: unless-stopped
     environment:
+      - SPRING_PROFILES_ACTIVE=remote
       - YDB_AUTH_JDBC_URL=
-      - YDB_AUTH_SERVICE_ACCOUNT_SERVICE_KEY_PATH=/run/secrets/ydb_auth_service_account_service_key
+      - YDB_AUTH_SERVICE_ACCOUNT_SERVICE_KEY_PATH=
       - YDB_AUTH_SERVICE_CONNECTION_STRING=
       - YDB_TOPIC_REVOKED_ACCESS=
       - YDB_TOPIC_REVOKED_ACCESS_LISTENER=
@@ -20,14 +26,20 @@ services:
       - booksourcing-network
     depends_on:
       - auth
+    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -XX:+UseZGC -Xmx4g -jar /app/standalone.jar --spring.profiles.active=remote
 
   auth:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
     image: ${REGISTRY_URL}/booksourcing-auth:latest
     container_name: booksourcing-auth
     restart: unless-stopped
     environment:
       - YDB_AUTH_JDBC_URL=
-      - YDB_AUTH_SERVICE_ACCOUNT_SERVICE_KEY_PATH=/run/secrets/ydb_auth_service_account_service_key
+      - YDB_AUTH_SERVICE_ACCOUNT_SERVICE_KEY_PATH=/run/secrets/ydb_auth_service_account_service_key.json
       - YDB_AUTH_SERVICE_CONNECTION_STRING=
       - YDB_TOPIC_REVOKED_ACCESS=
       - JWT_SECRET_ACCESS=
@@ -38,6 +50,7 @@ services:
       - "8080:8080"
     networks:
       - booksourcing-network
+    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -XX:+UseZGC -Xmx4g -jar /app/standalone.jar --spring.profiles.active=remote
 
 secrets:
   ydb_auth_service_account_service_key.json:
@@ -45,3 +58,4 @@ secrets:
 
 networks:
   booksourcing-network:
+
