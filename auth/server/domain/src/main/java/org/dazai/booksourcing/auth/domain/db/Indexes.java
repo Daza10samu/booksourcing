@@ -25,4 +25,5 @@ public class Indexes {
     public static final Index JWT_TOKENS__REVOKED__IDX = Internal.createIndex(DSL.name("jwt_tokens__revoked__idx"), JwtTokens.JWT_TOKENS, new OrderField[] { JwtTokens.JWT_TOKENS.REVOKED }, false);
     public static final Index JWT_TOKENS__USER_ID__IDX = Internal.createIndex(DSL.name("jwt_tokens__user_id__idx"), JwtTokens.JWT_TOKENS, new OrderField[] { JwtTokens.JWT_TOKENS.USER_ID }, false);
     public static final Index USERS__DISABLED_USERNAME__IDX = Internal.createIndex(DSL.name("users__disabled_username__idx"), Users.USERS, new OrderField[] { Users.USERS.IS_DISABLED, Users.USERS.USERNAME }, false);
+    public static final Index USERS__USERNAME__IDX = Internal.createIndex(DSL.name("users__username__idx"), Users.USERS, new OrderField[] { Users.USERS.USERNAME }, false);
 }

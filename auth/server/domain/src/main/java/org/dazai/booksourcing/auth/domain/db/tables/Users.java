@@ -108,7 +108,7 @@ public class Users extends TableImpl<UsersRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.asList(Indexes.USERS__DISABLED_USERNAME__IDX);
+        return Arrays.asList(Indexes.USERS__DISABLED_USERNAME__IDX, Indexes.USERS__USERNAME__IDX);
     }
 
     @Override

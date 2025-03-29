@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
     is_disabled    Bool                 NOT NULL,
 
     INDEX users__disabled_username__idx GLOBAL ON        (is_disabled, username),
+    INDEX users__username__idx GLOBAL UNIQUE SYNC ON        (username),
 
     PRIMARY KEY (id)
 );
